@@ -1,0 +1,13 @@
+
+win_fg.png
+size: 249, 233
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+stars_004-2
+  rotate: false
+  xy: 2, 2
+  size: 245, 229
+  orig: 256, 256
+  offset: 5, 12
+  index: -1

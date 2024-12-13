@@ -1,0 +1,51 @@
+body{
+    background-color: #3a3a3a;
+    color: rgb(0, 0, 0);
+    font: 1em sans-serif;
+    text-align: center;
+    margin: auto;
+    padding: 0px;
+    overflow: hidden;
+    font-family: 'roboto-c';
+    text-align: center;
+    width: 100%;
+}
+
+
+@font-face {
+    font-family: 'roboto-c';
+    src: url("../../../media/fonts/roboto-c.ttf");
+  }
+  
+
+canvas{
+    text-align: center;
+    margin: auto;
+    padding: 0;
+    margin: auto;
+    /*width: 50vw;*/
+}
+
+
+/*
+@media screen and (orientation:portrait) { 
+    canvas{
+        height: auto;
+        width: 100vw;
+
+    }
+}
+
+@media screen and (orientation:landscape) { 
+    canvas{
+        height: 50%;
+        width: 100vw;
+    }
+
+    body{
+        text-align: center;
+        margin:auto;
+        height: 50%;
+        width: 100%;
+    }
+}*/

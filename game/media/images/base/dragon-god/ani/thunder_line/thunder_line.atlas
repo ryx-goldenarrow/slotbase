@@ -1,0 +1,20 @@
+
+thunder_line.png
+size: 1024,64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+thunder_01
+  rotate: false
+  xy: 2, 39
+  size: 867, 21
+  orig: 867, 21
+  offset: 0, 0
+  index: -1
+thunder_03
+  rotate: false
+  xy: 2, 2
+  size: 33, 35
+  orig: 33, 35
+  offset: 0, 0
+  index: -1

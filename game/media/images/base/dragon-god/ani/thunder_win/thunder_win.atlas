@@ -1,0 +1,76 @@
+
+thunder_win.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+a1
+  rotate: false
+  xy: 2, 2
+  size: 256, 148
+  orig: 256, 148
+  offset: 0, 0
+  index: -1
+a2
+  rotate: false
+  xy: 2, 152
+  size: 297, 160
+  orig: 297, 160
+  offset: 0, 0
+  index: -1
+a3
+  rotate: false
+  xy: 2, 314
+  size: 315, 170
+  orig: 315, 170
+  offset: 0, 0
+  index: -1
+a4
+  rotate: false
+  xy: 301, 170
+  size: 190, 129
+  orig: 190, 129
+  offset: 0, 0
+  index: -1
+b1
+  rotate: true
+  xy: 493, 183
+  size: 95, 163
+  orig: 95, 163
+  offset: 0, 0
+  index: -1
+b2
+  rotate: false
+  xy: 844, 407
+  size: 80, 77
+  orig: 80, 77
+  offset: 0, 0
+  index: -1
+c1
+  rotate: true
+  xy: 521, 280
+  size: 136, 145
+  orig: 136, 145
+  offset: 0, 0
+  index: -1
+c2
+  rotate: true
+  xy: 319, 301
+  size: 115, 200
+  orig: 115, 200
+  offset: 0, 0
+  index: -1
+c3
+  rotate: true
+  xy: 680, 388
+  size: 96, 162
+  orig: 96, 162
+  offset: 0, 0
+  index: -1
+rainbow_1
+  rotate: false
+  xy: 319, 418
+  size: 359, 66
+  orig: 359, 66
+  offset: 0, 0
+  index: -1

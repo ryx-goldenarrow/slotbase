@@ -1,0 +1,20 @@
+
+change.png
+size: 196,126
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+g4s_002_2
+  rotate: false
+  xy: 130, 60
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+stars_009_2
+  rotate: false
+  xy: 2, 2
+  size: 126, 122
+  orig: 128, 128
+  offset: 0, 3
+  index: -1

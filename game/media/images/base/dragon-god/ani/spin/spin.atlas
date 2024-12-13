@@ -1,0 +1,27 @@
+
+spin.png
+size: 658,203
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+g4s_001-3
+  rotate: false
+  xy: 2, 4
+  size: 404, 197
+  orig: 410, 205
+  offset: 3, 4
+  index: -1
+stars_005-3
+  rotate: false
+  xy: 408, 2
+  size: 201, 199
+  orig: 205, 205
+  offset: 3, 0
+  index: -1
+word
+  rotate: true
+  xy: 611, 84
+  size: 117, 45
+  orig: 283, 118
+  offset: 83, 37
+  index: -1
