@@ -4,35 +4,16 @@ import { gsap, Sine, Elastic, Power0, Back } from "gsap";
 import Background from "../../template/background/Background";
 import SlotTemplate from "../../template/slot/SlotTemplate";
 import SpineObject from "../components/SpineObject";
-import HudTemplate from "../../template/slot/HudTemplate";
+import HudTemplate from "../../template/hud/HudTemplate";
 import { isLandscape, isPortrait } from "../../utils/Utils";
+
+import { SLOTDATA } from "../../../api/Backend";
 
 export default class MainGame extends Sprite {
 	public app: Application;
 	public background: Background;
 	public slot: SlotTemplate;
 	public hud: HudTemplate;
-
-	//public spineDragon: Spine;
-
-	//sample message in the announcement text
-	private message_arr: string[] = [
-		"Press Spin button to Play",
-		"Good Luck!",
-		"Play and Win up to 5,000 Jackpot!",
-	];
-
-	public win_announcement_text: Text = new Text({
-		text: "Welcome!",
-		style: {
-			fontFamily: "roboto-c",
-			fontSize: 25,
-			fill: 0x0,
-			align: "center",
-			wordWrap: true,
-			wordWrapWidth: 650,
-		},
-	});
 
 	constructor(app: Application) {
 		super();
@@ -98,10 +79,5 @@ export default class MainGame extends Sprite {
 			this.hud.scale.set(1);
 			this.hud.y = 340;
 		}
-	}
-
-	generateRandomMessage() {
-		this.win_announcement_text.text =
-			this.message_arr[Math.floor(Math.random() * 3)];
 	}
 }

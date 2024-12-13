@@ -30,9 +30,10 @@ export default class Preloader extends Sprite {
 			//init game assets----------------------------------------------------------
 			Assets.addBundle("images", {
 				//load spritesheet
-				//slot2: "assets/img/slot-assets-2.json",
-				//load img
+				symbol:"/game/media/images/base/dragon-god/ani/symbol/symbol.atlas", // prettier-ignore
+				change:"/game/media/images/base/dragon-god/ani/symbol/change.atlas", // prettier-ignore
 
+				//load img
 				info_bg: "/game/media/images/base/dragon-god/img/g007_img_com_1.png", // prettier-ignore
 				radio_box: "/game/media/images/base/dragon-god/img/g007_img_com_2.png", // prettier-ignore
 				green_led: "/game/media/images/base/dragon-god/img/g007_img_com_3.png", // prettier-ignore
@@ -78,6 +79,12 @@ export default class Preloader extends Sprite {
 				//spine----------------------------------------------------------------------------------------
 				chr_skel: "/game/media/images/spine/chr.json",
 				chr_atlas: "/game/media/images/spine/chr.atlas",
+
+				change_skel: "/game/media/images/spine/change.json",
+				change_atlas: "/game/media/images/spine/change.atlas",
+
+				symbol_skel: "/game/media/images/spine/symbol.json",
+				symbol_atlas: "/game/media/images/spine/symbol.atlas",
 
 				g007_font_2: "/game/media/images/base/dragon-god/font/g007_font_2.xml.fnt", // prettier-ignore
 				g007_mg_fnt_01: "/game/media/images/base/dragon-god/font/g007_mg_fnt_01.xml.fnt", // prettier-ignore

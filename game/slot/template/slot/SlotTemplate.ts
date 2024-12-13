@@ -35,12 +35,12 @@ export default class SlotTemplate extends Sprite {
 		this.addChild(this.reelmask);
 
 		this.addChild(this.reelContainer);
-		this.reelContainer.mask = this.reelmask;
+		//this.reelContainer.mask = this.reelmask;
 
 		let i: number = 0;
 
 		for (i = 0; i < 5; i++) {
-			//lower reel (id 0 to 4)
+			//mid reel (id 0 to 4)
 			this.reel[i] = new ReelTemplate();
 			this.reelContainer.addChild(this.reel[i]);
 			this.reel[i].position.set(-this.WIDTH_GAP * 2 + this.WIDTH_GAP * i, 0);
@@ -49,28 +49,47 @@ export default class SlotTemplate extends Sprite {
 			this.reel[i + 5] = new ReelTemplate();
 			this.reelContainer.addChild(this.reel[i + 5]);
 			this.reel[i + 5].position.set( -this.WIDTH_GAP * 2 + this.WIDTH_GAP * i, -590); // prettier-ignore
+
+			//lower reel (id 5 to 9)
+			this.reel[i + 10] = new ReelTemplate();
+			this.reelContainer.addChild(this.reel[i + 10]);
+			this.reel[i + 10].position.set( -this.WIDTH_GAP * 2 + this.WIDTH_GAP * i, 590); // prettier-ignore
 		}
 
 		this.animateReels();
 	}
 
+	spin() {}
+
 	animateReels() {
 		let i: number = 0;
 
-		for (i = 0; i < 5; i++) {
+		gsap.to(this, 1, {
+			repeat: -1,
+			onUpdate: () => {
+				for (i = 0; i < 5; i++) {
+					this.reel[i].y += 10;
+					if (this.reel[i].y > 590) {
+						this.reel[i].y = -590;
+					}
+				}
+			},
+		});
+
+		/*for (i = 0; i < 5; i++) {
 			gsap.to(this.reel[i], this.SLOT_SPEED, {
-				y: 590,
+				y: 0,
 				delay: i * 0.2,
 				ease: Power0.easeOut,
-				repeat: 5,
+				repeat: 2,
 			});
 
 			gsap.to(this.reel[i + 5], this.SLOT_SPEED, {
 				y: 0,
 				delay: i * 0.2,
 				ease: Power0.easeOut,
-				repeat: 5,
+				repeat: 2,
 			});
-		}
+		}*/
 	}
 }
