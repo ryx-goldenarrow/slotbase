@@ -1,6 +1,8 @@
 import { Application, Assets, Container, Sprite, TexturePool } from "pixi.js";
 import Preloader from "../game/slot/view/Screens/Preloader";
 import MainGame from "./slot/view/Screens/MainGame";
+import MainControl from "./slot/control/MainControl";
+import API from "./api/API";
 
 const cssstyle = require("../game/slot/template/css/game.css");
 
@@ -33,6 +35,9 @@ const cssstyle = require("../game/slot/template/css/game.css");
 
 	let mainGame = new MainGame(app);
 	gameContainer.addChild(mainGame);
+
+	let api: API = new API();
+	let mainControl: MainControl = new MainControl(mainGame, api);
 
 	//Add all game controls-----------------------------
 	//let controller: Controller = new Controller(gamePage);

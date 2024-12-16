@@ -1,4 +1,11 @@
-import { Application, Assets, Container, Sprite, Text } from "pixi.js";
+import {
+	Application,
+	Assets,
+	Container,
+	Sprite,
+	Text,
+	isMobile,
+} from "pixi.js";
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { gsap, Sine, Elastic, Power0, Back } from "gsap";
 import Background from "../../template/background/Background";
@@ -6,8 +13,6 @@ import SlotTemplate from "../../template/slot/SlotTemplate";
 import SpineObject from "../components/SpineObject";
 import HudTemplate from "../../template/hud/HudTemplate";
 import { isLandscape, isPortrait } from "../../utils/Utils";
-
-import { SLOTDATA } from "../../../api/Backend";
 
 export default class MainGame extends Sprite {
 	public app: Application;
@@ -29,7 +34,6 @@ export default class MainGame extends Sprite {
 	}
 
 	init() {
-		console.log("main game");
 		//play ambient sounds
 		//sound.play("sfx_ambient",{loop:true,volume:0.3});
 
@@ -44,6 +48,16 @@ export default class MainGame extends Sprite {
 		this.addChild(this.background, this.slot, this.hud);
 	}
 
+	//conntrol settings---------------------------------
+
+	spin() {
+		this.slot.startSpin();
+	}
+
+	resetValues() {}
+
+	//display settings---------------------------------
+
 	checkScreenSize() {
 		document.body.onresize = () => {
 			gsap.delayedCall(0.1, () => {
@@ -54,10 +68,7 @@ export default class MainGame extends Sprite {
 			this.resizeScreen();
 		});
 	}
-
 	resizeScreen() {
-		console.log("resize");
-
 		//this.x = this.app.renderer.width / 2;
 		//this.y = this.app.renderer.height / 2;
 

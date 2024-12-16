@@ -1,13 +1,5 @@
 import "pixi.js/text-bitmap";
-import {
-	Sprite,
-	Assets,
-	BitmapText,
-	BitmapFont,
-	Text,
-	NineSliceSprite,
-} from "pixi.js";
-import { isLandscape, nFormatter, numberFormatter } from "../../utils/Utils";
+import { Sprite, Assets, Text, NineSliceSprite } from "pixi.js";
 
 export default class TotalWinTemplate extends Sprite {
 	private background: NineSliceSprite;

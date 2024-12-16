@@ -4,52 +4,46 @@ import SpineObject from "../../view/components/SpineObject";
 
 export default class SymbolTemplate extends Sprite {
 	public base: Sprite;
-
 	public spine: SpineObject;
 
 	public symbolNames: string[] = [
-		"symbol_h1",
-		"symbol_h2",
-		"symbol_h3",
-		"symbol_h4",
-		"symbol_n1",
-		"symbol_n2",
-		"symbol_n3",
-		"symbol_n4",
-		"symbol_scatter",
-		"symbol_wild",
+		"symbol_n1", //0 - j
+		"symbol_n2", //1 - q
+		"symbol_n3", //2 - k
+		"symbol_n4", //3 - a
+		"symbol_h1", //4 -
+		"symbol_h2", //5 - phoenix
+		"symbol_h3", //6 - tiger
+		"symbol_h4", //7 - turtle
+		"symbol_wild", //8 wild
+		"symbol_scatter", //9 dragon hand
 	];
 
-	constructor() {
+	constructor(id: number) {
 		super();
 		this.anchor.set(0.5);
 		this.pivot.set(0.5);
-		this.base = new Sprite();
-		this.spine = new SpineObject("symbol");
+		this.base = this.addChild(new Sprite(Assets.get(this.symbolNames[id])));
+		this.spine = this.addChild(new SpineObject("symbol"));
 
 		this.init();
 	}
 
 	init() {
-		let id: number = generateRandom(10);
-
-		this.base = this.addChild(new Sprite(Assets.get(this.symbolNames[id])));
 		this.base.anchor.set(0.5);
 		this.base.pivot.set(0.5);
-
-		this.addChild(this.spine);
-
 		this.spine.scale.set(0.65);
-
-		this.play();
+		this.reset();
 	}
 
-	play(sybol_id: string = "H1") {
+	play(sybol_id: string) {
 		this.spine.visible = true;
 		this.spine.animate(0, sybol_id + "_play_win", false);
 	}
 
-	changeSymbol() {}
+	changeSymbol(id: number) {
+		this.base.texture = Assets.get(this.symbolNames[id]);
+	}
 
 	reset() {
 		this.spine.visible = false;

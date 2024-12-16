@@ -72,26 +72,6 @@ export function changeGraphicsColor(
 	gsap.to(gfx, { duration: duration, pixi: { lineColor: color } });
 }
 
-export function numberFormatter(number: number) {
-	var SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
-
-	// what tier? (determines SI symbol)
-	var tier = (Math.log10(Math.abs(number)) / 3) | 0;
-
-	// if zero, we don't need a suffix
-	if (tier == 0) return number;
-
-	// get suffix and determine scale
-	var suffix = SI_SYMBOL[tier];
-	var scale = Math.pow(10, tier * 3);
-
-	// scale the number
-	var scaled: number = number / scale;
-
-	// format number and add suffix
-	return scaled.toFixed(2) + suffix;
-}
-
 export function nFormatter(num: number) {
 	if (num >= 1000000000) {
 		return (num / 1000000000).toFixed(1).replace(/\.0$/, "") + "G";
@@ -104,4 +84,12 @@ export function nFormatter(num: number) {
 	}
 
 	return num;
+}
+
+export function addKeyboardEvent(keycode: number, fnc: Function) {
+	document.addEventListener("keydown", (key) => {
+		if (key.keyCode == keycode) {
+			fnc();
+		}
+	});
 }
