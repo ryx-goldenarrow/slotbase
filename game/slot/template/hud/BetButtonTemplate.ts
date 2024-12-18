@@ -1,12 +1,12 @@
 import "pixi.js/text-bitmap";
-import { Sprite, Assets, Text } from "pixi.js";
+import { Sprite, Assets, HTMLText } from "pixi.js";
 import { isLandscape, nFormatter } from "../../utils/Utils";
 
 export default class BetButtonTemplate extends Sprite {
 	private background: Sprite;
 	private btnBetAdd: Sprite;
 	private btnBetMin: Sprite;
-	private textBetLabel: Text;
+	private textBetLabel: HTMLText;
 
 	constructor() {
 		super();
@@ -29,7 +29,7 @@ export default class BetButtonTemplate extends Sprite {
 		this.btnBetMin.position.set(-165, 0);
 
 		this.textBetLabel = this.addChild(
-			new Text({
+			new HTMLText({
 				text: "",
 				style: {
 					fontFamily: "Arial",
@@ -40,8 +40,9 @@ export default class BetButtonTemplate extends Sprite {
 			})
 		);
 		this.textBetLabel.anchor.set(0.5);
+		this.textBetLabel.roundPixels = false;
 
-		this.updateText(10);
+		this.updateText(500);
 		this.resize();
 	}
 
@@ -54,6 +55,6 @@ export default class BetButtonTemplate extends Sprite {
 	}
 
 	updateText(bet: number) {
-		this.textBetLabel.text = nFormatter(bet);
+		this.textBetLabel.text = "IDR " + nFormatter(bet);
 	}
 }

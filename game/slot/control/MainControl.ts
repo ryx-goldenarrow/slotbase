@@ -40,8 +40,11 @@ export default class MainControl {
 }
 
 /*
+//-----------------------
 keyboard shortcuts
-
+//---------------------
 space - 32
 r = 82
+
+
 */

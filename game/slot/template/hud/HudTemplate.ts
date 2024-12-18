@@ -13,6 +13,9 @@ export default class HudTemplate extends Sprite {
 	public btnSpin: Sprite;
 	public btnInfo: Sprite;
 
+	private labelSpin: Sprite;
+	private labelAuto: Sprite;
+
 	constructor() {
 		super();
 		this.anchor.set(0.5);
@@ -20,11 +23,22 @@ export default class HudTemplate extends Sprite {
 
 		this.background = this.addChild(new Sprite(Assets.get("bg_hud")));
 		this.btnAuto = this.addChild(new Sprite(Assets.get("btn_auto_enable")));
+		this.btnAuto.anchor.set(0.5);
 		this.btnSpin = this.addChild(new Sprite(Assets.get("btn_spin")));
+		this.btnSpin.anchor.set(0.5);
 		this.btnInfo = this.addChild(new Sprite(Assets.get("btn_info")));
 		this.btnBet = this.addChild(new BetButtonTemplate());
 		this.totalWinBar = this.addChild(new TotalWinTemplate());
 		this.btnInfo.anchor.set(0.5);
+
+		//labels
+		this.labelSpin = this.btnSpin.addChild(
+			new Sprite(Assets.get("spin_enabled"))
+		);
+		this.labelSpin.anchor.set(0.5);
+
+		this.labelAuto = this.btnAuto.addChild(new Sprite(Assets.get("auto")));
+		this.labelAuto.anchor.set(0.5);
 
 		this.init();
 		this.resize();
@@ -39,10 +53,10 @@ export default class HudTemplate extends Sprite {
 		if (isLandscape()) {
 			this.totalWinBar.position.set(20, 20);
 			this.background.position.set(0, 0);
-			this.btnBet.position.set(-390, 50);
-			this.btnInfo.position.set(-650, 50);
-			this.btnAuto.position.set(300, 5);
-			this.btnSpin.position.set(450, -15);
+			this.btnBet.position.set(-420, 50);
+			this.btnInfo.position.set(-680, 50);
+			this.btnAuto.position.set(380, 45);
+			this.btnSpin.position.set(600, 40);
 		} else {
 			//-
 		}

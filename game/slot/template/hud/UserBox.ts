@@ -1,10 +1,11 @@
 import "pixi.js/text-bitmap";
-import { Sprite, Assets, Text } from "pixi.js";
+import { Sprite, Assets, Text, HTMLText } from "pixi.js";
 import { isLandscape, nFormatter } from "../../utils/Utils";
+import { GAMEDATA } from "../../../api/GAMEDATA";
 
 export default class UserBox extends Sprite {
 	private background: Sprite;
-	private textBetLabel: Text;
+	private textCreditLabel: HTMLText;
 
 	constructor() {
 		super();
@@ -16,32 +17,33 @@ export default class UserBox extends Sprite {
 		this.background.anchor.set(0.5);
 		this.background.pivot.set(0.5);
 
-		this.textBetLabel = this.addChild(
-			new Text({
-				text: "",
+		this.textCreditLabel = this.addChild(
+			new HTMLText({
+				text: "IDR 100,000.00",
 				style: {
 					fontFamily: "Arial",
-					fontSize: 35,
-					align: "center",
+					fontSize: 20,
+					align: "left",
 					fill: 0xdddd00,
 				},
 			})
 		);
-		this.textBetLabel.anchor.set(0.5);
+		this.textCreditLabel.anchor.set(0, 0.5);
+		this.textCreditLabel;
 
-		this.updateText(10);
 		this.resize();
 	}
 
 	resize() {
 		if (isLandscape()) {
-			//--
+			this.textCreditLabel.position.set(-65, 35);
 		} else {
 			//--
 		}
 	}
 
-	updateText(bet: number) {
-		this.textBetLabel.text = nFormatter(bet);
+	updateText() {
+		this.textCreditLabel.text =
+			GAMEDATA.CURRENCY + " " + nFormatter(GAMEDATA.CREDIT);
 	}
 }

@@ -15,6 +15,7 @@ import HudTemplate from "../../template/hud/HudTemplate";
 import { isLandscape, isPortrait } from "../../utils/Utils";
 import InfoPage from "../../template/info/InfoPage";
 import UserBox from "../../template/hud/UserBox";
+import JackpotTopBar from "../../template/hud/JackpotTopBar";
 
 export default class MainGame extends Sprite {
 	public app: Application;
@@ -23,6 +24,7 @@ export default class MainGame extends Sprite {
 	public hud: HudTemplate;
 	public info: InfoPage;
 	public userBox: UserBox;
+	public jackpotbar: JackpotTopBar;
 
 	constructor(app: Application) {
 		super();
@@ -35,6 +37,7 @@ export default class MainGame extends Sprite {
 		this.hud = new HudTemplate();
 
 		this.userBox = new UserBox();
+		this.jackpotbar = new JackpotTopBar();
 
 		this.info = new InfoPage();
 		this.info.visible = false;
@@ -54,7 +57,14 @@ export default class MainGame extends Sprite {
 
 	drawGameElements() {
 		//add game background
-		this.addChild(this.background, this.slot, this.hud, this.info);
+		this.addChild(
+			this.background,
+			this.slot,
+			this.hud,
+			this.userBox,
+			this.jackpotbar,
+			this.info
+		);
 	}
 
 	//conntrol settings---------------------------------
@@ -68,10 +78,12 @@ export default class MainGame extends Sprite {
 	//display settings---------------------------------
 
 	checkScreenSize() {
-		document.body.onresize = () => {
-			gsap.delayedCall(0.1, () => {
-				this.resizeScreen();
-			});
+		document.body.onresize = (e) => {
+			//setTimeout(() => {
+			console.log("test resize", e);
+			this.resizeScreen();
+			//}, 500);
+			//});
 		};
 
 		gsap.delayedCall(0.1, () => {
@@ -99,6 +111,8 @@ export default class MainGame extends Sprite {
 			this.slot.scale.set(1);
 			this.hud.scale.set(1);
 			this.hud.y = 340;
+			this.userBox.position.set(-660, -340);
+			this.jackpotbar.position.set(0, -340);
 		}
 	}
 }

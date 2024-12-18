@@ -46,6 +46,7 @@ export default class Preloader extends Sprite {
 				bg_user: "/game/media/images/base/dragon-god/img/g007_img_com_8.png", // prettier-ignore
 				bg_hud: "/game/media/images/base/dragon-god/img/g007_img_mg_2.png", // prettier-ignore
 				bg_bet: "/game/media/images/base/dragon-god/img/g007_img_mg_4.png", // prettier-ignore
+				bg_bar_top: "/game/media/images/base/dragon-god/img/g007_img_jp_1.png", // prettier-ignore
 
 				//bg
 				bg: "/game/media/images/base/dragon-god/img/g007_img_mg_1.png", // prettier-ignore

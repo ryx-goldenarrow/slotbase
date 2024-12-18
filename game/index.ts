@@ -1,4 +1,10 @@
-import { Application, Assets, Container, Sprite, TexturePool } from "pixi.js";
+import {
+	Application,
+	Assets,
+	Sprite,
+	TexturePool,
+	TextureStyle,
+} from "pixi.js";
 import Preloader from "../game/slot/view/Screens/Preloader";
 import MainGame from "./slot/view/Screens/MainGame";
 import MainControl from "./slot/control/MainControl";
@@ -8,7 +14,6 @@ import { User } from "./type";
 const cssstyle = require("../game/slot/template/css/game.css");
 
 (async () => {
-	//PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 	//TexturePool.textureOptions.scaleMode = "linear";
 
 	//initialize API
@@ -22,9 +27,16 @@ const cssstyle = require("../game/slot/template/css/game.css");
 
 	const app: Application = new Application();
 
-	await app.init({ background: "#303030", resizeTo: window });
+	await app.init({
+		background: "#303030",
+		resizeTo: window,
+		resolution: 1,
+	});
 	app.canvas.style.position = "relative";
 	document.body.appendChild(app.canvas);
+
+	//TexturePool.textureOptions.scaleMode = "nearest";
+	//TextureStyle.defaultOptions.scaleMode = "nearest";
 
 	// Create and add a container to the stage-----------------------------
 	const gameContainer = new Sprite();
@@ -33,6 +45,12 @@ const cssstyle = require("../game/slot/template/css/game.css");
 	//center container
 	gameContainer.anchor.set(0.5);
 	gameContainer.position.set(app.canvas.width * 0.5, app.canvas.height * 0.5);
+	console.log(
+		"zz",
+		app.canvas.width,
+		app.canvas.height,
+		1280 / app.canvas.width
+	);
 
 	//draw preloader
 	let preloader: Preloader = new Preloader();
