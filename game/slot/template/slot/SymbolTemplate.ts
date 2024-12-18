@@ -1,5 +1,4 @@
 import { Sprite, Assets } from "pixi.js";
-import { generateRandom } from "../../utils/Utils";
 import SpineObject from "../../view/components/SpineObject";
 
 export default class SymbolTemplate extends Sprite {

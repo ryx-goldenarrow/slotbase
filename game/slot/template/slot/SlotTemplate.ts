@@ -1,22 +1,33 @@
-import { Sprite, Assets, Graphics, Container, Ticker } from "pixi.js";
+import {Sprite,	Assets,	Graphics,Container,	Ticker} from "pixi.js"; //prettier-ignore
 import ReelTemplate from "./ReelTemplate";
 import { gsap, Power0, Elastic, Back } from "gsap";
-import { SLOTDATA } from "../../../api/SLOTDATA";
 import { generateRandom } from "../../utils/Utils";
 
 export default class SlotTemplate extends Sprite {
+	//initial stop when loading the game
+	private placeholderstop: number[][] = [
+		[7, 4, 7, 0, 1, 1, 2, 5, 7, 4, 5, 2, 1, 7, 3],
+		[5, 6, 7, 2, 3, 3, 0, 1, 3, 4, 4, 0, 6, 0, 5],
+		[4, 4, 5, 0, 0, 3, 2, 7, 1, 5, 1, 5, 1, 5, 0],
+		[7, 5, 7, 1, 2, 3, 2, 4, 0, 2, 1, 2, 2, 7, 6],
+		[7, 5, 4, 1, 1, 1, 6, 7, 5, 2, 2, 1, 1, 2, 3],
+		[1, 2, 0, 4, 1, 7, 3, 7, 3, 7, 2, 1, 6, 8, 5],
+	];
+
+	private spinningAssets: number[][] = [
+		[9, 4, 7, 9, 1, 1, 9, 5, 7, 9, 5, 2, 9, 7, 3],
+	];
+
 	private background: Sprite;
 	private reelContainer: Container[] = [];
 	private slotReelGroup: Container;
 	public reel: ReelTemplate[] = [];
-
 	private reelmask: Graphics;
 
 	private WIDTH_GAP: number = 210;
 	public SLOT_SPEED: number = 80;
 	public REEL_STOP: boolean[] = [false, false, false, false, false];
 	public SLOT_SPINNING: boolean = false;
-
 	public REEL_STOP_ID: number[] = [];
 
 	constructor() {
@@ -49,20 +60,22 @@ export default class SlotTemplate extends Sprite {
 			this.reelContainer[i] = this.slotReelGroup.addChild(new Container());
 
 			//mid reel (id 0 to 4)// final reel output
-			this.reel[i] = new ReelTemplate(this.generateReelStopId(i, 1, true));
+			this.reel[i] = new ReelTemplate([0, 0, 0]);
 			this.reelContainer[i].addChild(this.reel[i]);
 			this.reel[i].position.set(-this.WIDTH_GAP * 2 + this.WIDTH_GAP * i, 0);
 
 			//upper reel (id 5 to 9)
-			this.reel[i + 5] = new ReelTemplate(this.generateReelStopId(i, 7, true));
+			this.reel[i + 5] = new ReelTemplate([0, 0, 0]);
 			this.reelContainer[i].addChild(this.reel[i + 5]);
 			this.reel[i + 5].position.set( -this.WIDTH_GAP * 2 + this.WIDTH_GAP * i, -590); // prettier-ignore
 
 			//lower reel (id 5 to 9)
-			this.reel[i + 10] = new ReelTemplate(this.generateReelStopId(i, 7, true));
+			this.reel[i + 10] = new ReelTemplate([0, 0, 0]);
 			this.reelContainer[i].addChild(this.reel[i + 10]);
 			this.reel[i + 10].position.set( -this.WIDTH_GAP * 2 + this.WIDTH_GAP * i, 590); // prettier-ignore
 		}
+
+		this.updateSymbolAssets(this.placeholderstop[generateRandom(3, 0)]);
 	}
 
 	addTicker() {
@@ -83,50 +96,60 @@ export default class SlotTemplate extends Sprite {
 
 	startSpin() {
 		//toggle spin
+		this.updateSymbolAssets(this.spinningAssets[0]);
 		this.REEL_STOP = [false, false, false, false, false];
 		this.SLOT_SPINNING = true;
 
-		//fake stop call
-		setTimeout(() => {
-			this.updateSymbolAssets();
-			this.stopSpin();
-		}, 5500);
+		let i: number = 0;
+		for (i = 0; i < 5; i++) {
+			this.reel[i].applyBlur();
+			this.reel[i + 5].applyBlur();
+			this.reel[i + 10].applyBlur();
+		}
 	}
 
 	// prettier-ignore
-	generateReelStopId(reel_id: number,stop_id: number = 0, fakeId: boolean = false) { 
-		if (fakeId == true) {
-			stop_id = generateRandom(12, 0);
-		}
+	generateReelStopId(reelStop:number[]=[]) { 
+		let i:number = 0;
+		let k:number = 0;
+		let id:number = 0;
+		let reelStopId:number[][] = []
 
-		let stopId: number[] = [
-			SLOTDATA.REEL_ID[reel_id][stop_id + 0],
-			SLOTDATA.REEL_ID[reel_id][stop_id + 1],
-			SLOTDATA.REEL_ID[reel_id][stop_id + 2],
-		];
-		return stopId;
+		for(k=0; k<5;k++){
+			let reels:number[] = []
+			for(i=0; i<3; i++){
+				reels.push(reelStop[id]);
+				id+=1;
+			}
+			reelStopId.push(reels);
+		}
+		return reelStopId;
 	}
 
-	updateSymbolAssets() {
+	updateSymbolAssets(reelAssetsId: number[]) {
 		let i: number = 0;
+		let assetsId: number[][] = this.generateReelStopId(reelAssetsId);
+		let otherReelIdTop: number[][] = this.generateReelStopId(
+			this.placeholderstop[generateRandom(5, 0)]
+		);
+
+		let otherReelIdBottom: number[][] = this.generateReelStopId(
+			this.placeholderstop[generateRandom(5, 0)]
+		);
 
 		for (i = 0; i < 5; i++) {
 			//mid reel (id 0 to 4)// final reel output
-			this.reel[i].updateSymbolTexture(this.generateReelStopId(i, 7, true));
-
+			this.reel[i].updateSymbolTexture(assetsId[i]);
 			//upper reel (id 5 to 9)
-			this.reel[i + 5].updateSymbolTexture(this.generateReelStopId(i, 7, true));
-
+			this.reel[i + 5].updateSymbolTexture(otherReelIdTop[i]);
 			//lower reel (id 5 to 9)
-			this.reel[i + 10].updateSymbolTexture(
-				this.generateReelStopId(i, 7, true)
-			);
+			this.reel[i + 10].updateSymbolTexture(otherReelIdBottom[i]);
 		}
 	}
 
 	stopSpin(forceStop: boolean = false) {
 		let i: number = 0;
-		let SLOT_STOP_SPEED: number = this.SLOT_SPEED * 0.01;
+		let SLOT_STOP_SPEED: number = this.SLOT_SPEED * 0.005;
 		let delay: number = SLOT_STOP_SPEED;
 
 		for (i = 0; i < 5; i++) {
@@ -144,8 +167,12 @@ export default class SlotTemplate extends Sprite {
 					this.REEL_STOP[reelID] = true;
 				},
 				onComplete: () => {
+					this.reel[reelID].removeFilter();
 					if (reelID == 4) {
 						this.SLOT_SPINNING = false;
+						//this.reel[i].removeFilter();
+						//this.reel[i + 5].removeFilter();
+						//this.reel[i + 10].removeFilter();
 					}
 				},
 			});

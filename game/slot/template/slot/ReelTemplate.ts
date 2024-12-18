@@ -1,9 +1,17 @@
-import { Sprite, Assets } from "pixi.js";
+import { Sprite, BlurFilter } from "pixi.js";
 import SymbolTemplate from "./SymbolTemplate";
 
 export default class ReelTemplate extends Sprite {
 	public symbol: SymbolTemplate[] = [];
 	private HEIGHT_GAP: number = 200;
+
+	private blurFilter = new BlurFilter({
+		strengthY: 4,
+		strengthX: 1,
+		quality: 4,
+		resolution: 1,
+		kernelSize: 5,
+	});
 
 	constructor(symbol_id: number[]) {
 		super();
@@ -27,5 +35,13 @@ export default class ReelTemplate extends Sprite {
 		for (i = 0; i < 3; i++) {
 			this.symbol[i].changeSymbol(texture_id[i]);
 		}
+	}
+
+	applyBlur() {
+		this.filters = [this.blurFilter];
+	}
+
+	removeFilter() {
+		this.filters = [];
 	}
 }

@@ -3,13 +3,22 @@ import Preloader from "../game/slot/view/Screens/Preloader";
 import MainGame from "./slot/view/Screens/MainGame";
 import MainControl from "./slot/control/MainControl";
 import API from "./api/API";
+import { User } from "./type";
 
 const cssstyle = require("../game/slot/template/css/game.css");
 
 (async () => {
 	//PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-
 	//TexturePool.textureOptions.scaleMode = "linear";
+
+	//initialize API
+	let api: API = new API();
+	let user: User = {
+		name: "agent001",
+		password: "1234567890",
+	};
+	api.login(user);
+	//------------------------------------
 
 	const app: Application = new Application();
 
@@ -20,6 +29,7 @@ const cssstyle = require("../game/slot/template/css/game.css");
 	// Create and add a container to the stage-----------------------------
 	const gameContainer = new Sprite();
 	app.stage.addChild(gameContainer);
+
 	//center container
 	gameContainer.anchor.set(0.5);
 	gameContainer.position.set(app.canvas.width * 0.5, app.canvas.height * 0.5);
@@ -36,9 +46,6 @@ const cssstyle = require("../game/slot/template/css/game.css");
 	let mainGame = new MainGame(app);
 	gameContainer.addChild(mainGame);
 
-	let api: API = new API();
-	let mainControl: MainControl = new MainControl(mainGame, api);
-
 	//Add all game controls-----------------------------
-	//let controller: Controller = new Controller(gamePage);
+	let mainControl: MainControl = new MainControl(preloader, mainGame, api);
 })();

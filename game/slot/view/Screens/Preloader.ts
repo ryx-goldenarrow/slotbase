@@ -7,6 +7,8 @@ export default class Preloader extends Sprite {
 	private bg_progress_bar: Graphics = new Graphics();
 	private progress_bar: Graphics = new Graphics();
 
+	private LANG: string = "EN";
+
 	private progress_text: Text = new Text({
 		text: "0 %",
 		style: {
@@ -22,6 +24,7 @@ export default class Preloader extends Sprite {
 		this.anchor.set(0.5);
 		this.pivot.set(0.5);
 		this.init();
+		this.interactive = true;
 	}
 
 	init() {
@@ -76,6 +79,11 @@ export default class Preloader extends Sprite {
 				btn_settings:"/game/media/images/base/dragon-god/img/g007_img_com_9.png", // prettier-ignore
 				btn_close_settings:"/game/media/images/base/dragon-god/img/g007_img_com_10.png", // prettier-ignore
 
+				//info
+				g007_img_ru_1:"/game/media/images/base/dragon-god/img/g007_img_ru_1.png", // prettier-ignore
+				g007_img_ru_2:"/game/media/images/base/dragon-god/img/g007_img_ru_2.png", // prettier-ignore
+				g007_img_ru_3:"/game/media/images/base/dragon-god/img/g007_img_ru_3.png", // prettier-ignore
+
 				//spine----------------------------------------------------------------------------------------
 				chr_skel: "/game/media/images/spine/chr.json",
 				chr_atlas: "/game/media/images/spine/chr.atlas",
@@ -90,9 +98,35 @@ export default class Preloader extends Sprite {
 				g007_mg_fnt_01: "/game/media/images/base/dragon-god/font/g007_mg_fnt_01.xml.fnt", // prettier-ignore
 				g007_font_buy_1: "/game/media/images/base/dragon-god/font/g007_font_buy_1.xml.fnt", // prettier-ignore
 				//g007_font_JP_1: "/game/media/images/base/dragon-god/font/g007_font_JP_1.xml.fnt", // prettier-ignore
+
+				//words
+				buy_feature: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_com_4.png", // prettier-ignore
+				buy_free_spins: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_com_5.png", // prettier-ignore
+				bonus: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_com_6.png", // prettier-ignore
+				sound_settings: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_com_7.png", // prettier-ignore
+				buy: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_com_8.png", // prettier-ignore
+				free_spins_win: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_com_9.png", // prettier-ignore
+				free_spins_left: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_fg_1.png", // prettier-ignore
+				silver: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_jp_1.png", // prettier-ignore
+				gold: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_jp_2.png", // prettier-ignore
+				platinum: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_jp_3.png", // prettier-ignore
+				logo: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_ld_1.png", // prettier-ignore
+				total_win: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_1.png", // prettier-ignore
+				auto: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_2.png", // prettier-ignore
+				stop: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_3.png", // prettier-ignore
+				spin_disabled: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_4.png", // prettier-ignore
+				spin_enabled: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_5.png", // prettier-ignore
+				congratulations: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_rs_1.png", // prettier-ignore
+				you_win: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_rs_2.png", // prettier-ignore
+				free_spins: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_rs_3.png", // prettier-ignore
+				symbols: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_ru_1.png", // prettier-ignore
+				free_game: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_ru_2.png", // prettier-ignore
 			});
 		})();
 
+		Assets.addBundle("words", {
+			//load spritesheet
+		});
 		//add preloader container
 		this.addChild(this.preloader_container);
 

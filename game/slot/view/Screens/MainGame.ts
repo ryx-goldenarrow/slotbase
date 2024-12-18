@@ -13,12 +13,16 @@ import SlotTemplate from "../../template/slot/SlotTemplate";
 import SpineObject from "../components/SpineObject";
 import HudTemplate from "../../template/hud/HudTemplate";
 import { isLandscape, isPortrait } from "../../utils/Utils";
+import InfoPage from "../../template/info/InfoPage";
+import UserBox from "../../template/hud/UserBox";
 
 export default class MainGame extends Sprite {
 	public app: Application;
 	public background: Background;
 	public slot: SlotTemplate;
 	public hud: HudTemplate;
+	public info: InfoPage;
+	public userBox: UserBox;
 
 	constructor(app: Application) {
 		super();
@@ -29,6 +33,11 @@ export default class MainGame extends Sprite {
 		this.background = new Background(app);
 		this.slot = new SlotTemplate();
 		this.hud = new HudTemplate();
+
+		this.userBox = new UserBox();
+
+		this.info = new InfoPage();
+		this.info.visible = false;
 
 		this.init();
 	}
@@ -45,7 +54,7 @@ export default class MainGame extends Sprite {
 
 	drawGameElements() {
 		//add game background
-		this.addChild(this.background, this.slot, this.hud);
+		this.addChild(this.background, this.slot, this.hud, this.info);
 	}
 
 	//conntrol settings---------------------------------
@@ -64,6 +73,7 @@ export default class MainGame extends Sprite {
 				this.resizeScreen();
 			});
 		};
+
 		gsap.delayedCall(0.1, () => {
 			this.resizeScreen();
 		});

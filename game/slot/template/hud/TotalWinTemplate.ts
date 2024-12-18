@@ -30,7 +30,6 @@ export default class TotalWinTemplate extends Sprite {
 		);
 		this.textTotalWinLabel.anchor.set(0.5);
 		this.textTotalWinLabel.position.set(-70, 35);
-
 		this.textTotalWinAmount = this.addChild(
 			new Text({
 				text: "1,000",
