@@ -79,7 +79,7 @@ export function nFormatter(num: number) {
 		return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
 	} else if (num >= 1000) {
 		return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
-	} else if (num <= 10) {
+	} else if (num <= 100 && num != 0) {
 		return (Math.round(num * 100) / 100).toFixed(2);
 	}
 

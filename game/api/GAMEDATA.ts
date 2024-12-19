@@ -1,4 +1,4 @@
-import { FreeGameInfo } from "../type";
+import { Board, FreeGameInfo, WinLines } from "../type";
 
 export type GameDataType = {
 	BET: number;
@@ -35,7 +35,11 @@ export type GameDataType = {
 	JP: number;
 	JP_PRIZE: number;
 	TOTAL_WIN: number;
+	WIN_LINES_POS: number[];
+	WIN_LINES: WinLines[];
+
 	FREE_GAME_INFO: FreeGameInfo;
+	BOARD: Board;
 
 	setToken(token: string): void;
 	getToken(): string;
@@ -77,6 +81,8 @@ export const GAMEDATA: GameDataType = {
 	JP: -1,
 	JP_PRIZE: -1,
 	TOTAL_WIN: 0,
+	WIN_LINES: [],
+	WIN_LINES_POS: [0],
 
 	FREE_GAME_INFO: {
 		bet: 0,
@@ -89,6 +95,13 @@ export const GAMEDATA: GameDataType = {
 		results: [],
 		type: 0,
 		userId: 0,
+	},
+
+	BOARD: {
+		gameSerial: "",
+		scatterPos: [],
+		totems: [],
+		winLines: [],
 	},
 
 	//-------------------------------

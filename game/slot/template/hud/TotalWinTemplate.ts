@@ -1,5 +1,7 @@
 import "pixi.js/text-bitmap";
 import { Sprite, Assets, Text, NineSliceSprite } from "pixi.js";
+import { GAMEDATA } from "../../../api/GAMEDATA";
+import { nFormatter } from "../../utils/Utils";
 
 export default class TotalWinTemplate extends Sprite {
 	private background: NineSliceSprite;
@@ -32,7 +34,7 @@ export default class TotalWinTemplate extends Sprite {
 		this.textTotalWinLabel.position.set(-70, 35);
 		this.textTotalWinAmount = this.addChild(
 			new Text({
-				text: "1,000",
+				text: "0",
 				style: {
 					fontFamily: "Arial",
 					fontSize: 35,
@@ -43,5 +45,9 @@ export default class TotalWinTemplate extends Sprite {
 		);
 		this.textTotalWinAmount.anchor.set(0.5);
 		this.textTotalWinAmount.position.set(140, 35);
+	}
+
+	updateText() {
+		this.textTotalWinAmount.text = nFormatter(GAMEDATA.TOTAL_WIN);
 	}
 }

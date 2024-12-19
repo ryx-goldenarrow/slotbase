@@ -30,26 +30,22 @@ const cssstyle = require("../game/slot/template/css/game.css");
 	await app.init({
 		background: "#303030",
 		resizeTo: window,
-		resolution: 1,
+		resolution: window.devicePixelRatio,
 	});
 	app.canvas.style.position = "relative";
 	document.body.appendChild(app.canvas);
 
-	//TexturePool.textureOptions.scaleMode = "nearest";
-	//TextureStyle.defaultOptions.scaleMode = "nearest";
-
 	// Create and add a container to the stage-----------------------------
 	const gameContainer = new Sprite();
+	gameContainer.anchor.set(0.5);
 	app.stage.addChild(gameContainer);
 
-	//center container
-	gameContainer.anchor.set(0.5);
-	gameContainer.position.set(app.canvas.width * 0.5, app.canvas.height * 0.5);
-	console.log(
-		"zz",
-		app.canvas.width,
-		app.canvas.height,
-		1280 / app.canvas.width
+	//temp size
+	console.log("sizes", app.renderer.width, app.renderer.width);
+	gameContainer.scale.set(0.5);
+	gameContainer.position.set(
+		app.renderer.width * 0.5,
+		app.renderer.height * 0.5
 	);
 
 	//draw preloader

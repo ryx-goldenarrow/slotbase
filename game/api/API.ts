@@ -103,6 +103,7 @@ export default class API {
 			this.getAcquireData(),
 			(response: any) => {
 				response.json().then((resData: AcquireReceiveData) => {
+					this.copyAcquireData(resData);
 					action(resData);
 					this.settleRequest();
 				});
@@ -196,15 +197,25 @@ export default class API {
 	}
 
 	copyAcquireData(acquireData: AcquireReceiveData) {
+		//GAMEDATA.REEL_STOP = [5, 5, 4, 2, 8, 1, 5, 4, 1, 0, 0, 3, 7, 1, 7]; //acquireData.board.totems;
 		GAMEDATA.CREDIT = acquireData.credit;
 		GAMEDATA.JP = acquireData.jp;
 		GAMEDATA.JP_PRIZE = acquireData.jpPrize;
 		GAMEDATA.TOTAL_WIN = acquireData.totalWin;
 		GAMEDATA.FREE_GAME_INFO = acquireData.freegameInfo;
+		GAMEDATA.BOARD = acquireData.board;
+		GAMEDATA.REEL_STOP = GAMEDATA.BOARD.totems;
+		GAMEDATA.WIN_LINES = GAMEDATA.BOARD.winLines;
 	}
 
 	//TODO
 	validateResponse() {
 		//------------
+	}
+
+	resetData() {
+		GAMEDATA.WIN_LINES = [];
+		GAMEDATA.TOTAL_WIN = 0;
+		GAMEDATA.REEL_STOP = [];
 	}
 }

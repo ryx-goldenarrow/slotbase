@@ -19,6 +19,11 @@ export default class SpineObject extends Sprite {
 	}
 
 	animate(trackIndex: number, animationID: string, loop: boolean = true) {
+		this.spine.autoUpdate = true;
 		this.spine.state.setAnimation(trackIndex, animationID, loop);
+	}
+
+	stop() {
+		this.spine.autoUpdate = false;
 	}
 }

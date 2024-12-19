@@ -4,18 +4,32 @@ import SpineObject from "../../view/components/SpineObject";
 export default class SymbolTemplate extends Sprite {
 	public base: Sprite;
 	public spine: SpineObject;
-
+	public sparkle: SpineObject;
+	public symboldID: number = 0;
 	public symbolNames: string[] = [
-		"symbol_n1", //0 - j
-		"symbol_n2", //1 - q
-		"symbol_n3", //2 - k
-		"symbol_n4", //3 - a
-		"symbol_h1", //4 -
+		"symbol_n1", //0 - a
+		"symbol_n2", //1 - k
+		"symbol_n3", //2 - q
+		"symbol_n4", //3 - j
+		"symbol_h1", //4 -dragon
 		"symbol_h2", //5 - phoenix
 		"symbol_h3", //6 - tiger
 		"symbol_h4", //7 - turtle
-		"symbol_wild", //8 wild
-		"symbol_scatter", //9 dragon hand
+		"symbol_scatter", //8 dragon hand
+		"symbol_wild", //9 wild
+	];
+
+	public symbolTexture: string[] = [
+		"N1", //0 - a
+		"N2", //1 - k
+		"N3", //2 - q
+		"N4", //3 - j
+		"H1", //4 - dragon
+		"H2", //5 - tiger
+		"H3", //6 - phoenix
+		"H4", //7 - turtle
+		"Scatter", //8 dragon hand
+		"Wild", //9 wild
 	];
 
 	constructor(id: number) {
@@ -24,7 +38,7 @@ export default class SymbolTemplate extends Sprite {
 		this.pivot.set(0.5);
 		this.base = this.addChild(new Sprite(Assets.get(this.symbolNames[id])));
 		this.spine = this.addChild(new SpineObject("symbol"));
-
+		this.sparkle = this.addChild(new SpineObject("change"));
 		this.init();
 	}
 
@@ -35,16 +49,26 @@ export default class SymbolTemplate extends Sprite {
 		this.reset();
 	}
 
-	play(sybol_id: string) {
+	play() {
 		this.spine.visible = true;
-		this.spine.animate(0, sybol_id + "_play_win", false);
+		this.spine.animate(
+			0,
+			this.symbolTexture[this.symboldID] + "_play_win",
+			true
+		);
 	}
 
 	changeSymbol(id: number) {
+		this.symboldID = id;
 		this.base.texture = Assets.get(this.symbolNames[id]);
 	}
 
+	animateChange() {
+		this.sparkle.animate(0, "animation", true);
+	}
+
 	reset() {
+		this.spine.stop();
 		this.spine.visible = false;
 	}
 }

@@ -31,7 +31,7 @@ export default class JackpotTopBar extends Sprite {
 
 			this.textLabel[i] = this.background[i].addChild(
 				new HTMLText({
-					text: "IDR 100.00",
+					text: "IDR 100.00" + i,
 					style: {
 						fontFamily: "Arial",
 						fontSize: 25,
@@ -55,7 +55,11 @@ export default class JackpotTopBar extends Sprite {
 		}
 	}
 
-	updateText(silver: string, gold: string, platinum: string) {
+	updateText() {
+		console.log("update text");
+		this.textLabel[0].text = GAMEDATA.CURRENCY + " " + GAMEDATA.PLATINUM;
+		this.textLabel[1].text = GAMEDATA.CURRENCY + " " + GAMEDATA.GOLD;
+		this.textLabel[2].text = GAMEDATA.CURRENCY + " " + GAMEDATA.SILVER;
 		//this.textLabel.text = GAMEDATA.CURRENCY + " " + nFormatter(GAMEDATA.CREDIT);
 	}
 }

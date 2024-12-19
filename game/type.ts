@@ -81,7 +81,7 @@ export type Board = {
 	winLines: WinLines[];
 };
 
-type WinLines = {
+export type WinLines = {
 	winScore: number;
 	winningTotemId: number;
 	posArray: number[];
@@ -90,22 +90,22 @@ type WinLines = {
 
 export type SettleRequestData = AcquireRequestData;
 
-export type SettleReceiveData = {
-	bet: number;
-	category: number;
-	coinType: number;
-	gameSerial: string;
-	jp: number;
-	jpPrize: number;
-	machineId: number;
-	userId: string;
-};
-
 export type InfoRequestData = {
 	bet: number;
 	category: string;
 	coinType: number;
 	userId: string;
+};
+
+export type SettleReceiveData = {
+	bet: number;
+	category: number;
+	coinType: number;
+	userId: string;
+	gameSerial: string;
+	jp: number;
+	jpPrize: number;
+	machineId: number;
 };
 
 export type InfoReceiveData = {

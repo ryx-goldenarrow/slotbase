@@ -2,6 +2,8 @@ import {Sprite,	Assets,	Graphics,Container,	Ticker} from "pixi.js"; //prettier-i
 import ReelTemplate from "./ReelTemplate";
 import { gsap, Power0, Elastic, Back } from "gsap";
 import { generateRandom } from "../../utils/Utils";
+import { GAMEDATA } from "../../../api/GAMEDATA";
+import { WinLines } from "../../../type";
 
 export default class SlotTemplate extends Sprite {
 	//initial stop when loading the game
@@ -12,10 +14,6 @@ export default class SlotTemplate extends Sprite {
 		[7, 5, 7, 1, 2, 3, 2, 4, 0, 2, 1, 2, 2, 7, 6],
 		[7, 5, 4, 1, 1, 1, 6, 7, 5, 2, 2, 1, 1, 2, 3],
 		[1, 2, 0, 4, 1, 7, 3, 7, 3, 7, 2, 1, 6, 8, 5],
-	];
-
-	private spinningAssets: number[][] = [
-		[9, 4, 7, 9, 1, 1, 9, 5, 7, 9, 5, 2, 9, 7, 3],
 	];
 
 	private background: Sprite;
@@ -75,7 +73,9 @@ export default class SlotTemplate extends Sprite {
 			this.reel[i + 10].position.set( -this.WIDTH_GAP * 2 + this.WIDTH_GAP * i, 590); // prettier-ignore
 		}
 
-		this.updateSymbolAssets(this.placeholderstop[generateRandom(3, 0)]);
+		this.updateSymbolAssets(
+			this.placeholderstop[generateRandom(this.placeholderstop.length, 0)]
+		);
 	}
 
 	addTicker() {
@@ -96,7 +96,9 @@ export default class SlotTemplate extends Sprite {
 
 	startSpin() {
 		//toggle spin
-		this.updateSymbolAssets(this.spinningAssets[0]);
+		this.updateSymbolAssets(
+			this.placeholderstop[generateRandom(this.placeholderstop.length, 0)]
+		);
 		this.REEL_STOP = [false, false, false, false, false];
 		this.SLOT_SPINNING = true;
 
@@ -130,11 +132,11 @@ export default class SlotTemplate extends Sprite {
 		let i: number = 0;
 		let assetsId: number[][] = this.generateReelStopId(reelAssetsId);
 		let otherReelIdTop: number[][] = this.generateReelStopId(
-			this.placeholderstop[generateRandom(5, 0)]
+			this.placeholderstop[generateRandom(this.placeholderstop.length, 0)]
 		);
 
 		let otherReelIdBottom: number[][] = this.generateReelStopId(
-			this.placeholderstop[generateRandom(5, 0)]
+			this.placeholderstop[generateRandom(this.placeholderstop.length, 0)]
 		);
 
 		for (i = 0; i < 5; i++) {
@@ -142,8 +144,26 @@ export default class SlotTemplate extends Sprite {
 			this.reel[i].updateSymbolTexture(assetsId[i]);
 			//upper reel (id 5 to 9)
 			this.reel[i + 5].updateSymbolTexture(otherReelIdTop[i]);
-			//lower reel (id 5 to 9)
+			//lower reel (id 10 to 14)
 			this.reel[i + 10].updateSymbolTexture(otherReelIdBottom[i]);
+		}
+	}
+
+	animateSymbols(winningSymbols: number[]) {
+		let i: number = 0;
+		for (i = 0; i < winningSymbols.length; i++) {
+			let _id: number = winningSymbols[i];
+			if (_id < 3) {
+				this.reel[0].animateSymbolTexture(_id % 3, _id);
+			} else if (_id < 6) {
+				this.reel[1].animateSymbolTexture(_id % 3, _id);
+			} else if (_id < 9) {
+				this.reel[2].animateSymbolTexture(_id % 3, _id);
+			} else if (_id < 12) {
+				this.reel[3].animateSymbolTexture(_id % 3, _id);
+			} else if (_id < 15) {
+				this.reel[4].animateSymbolTexture(_id % 3, _id);
+			}
 		}
 	}
 
@@ -170,12 +190,30 @@ export default class SlotTemplate extends Sprite {
 					this.reel[reelID].removeFilter();
 					if (reelID == 4) {
 						this.SLOT_SPINNING = false;
-						//this.reel[i].removeFilter();
-						//this.reel[i + 5].removeFilter();
-						//this.reel[i + 10].removeFilter();
+						this.emit("spinEndEvent");
+						this.checkWin();
 					}
 				},
 			});
+		}
+	}
+
+	checkWin() {
+		if (GAMEDATA.WIN_LINES_POS.length > 0) {
+			GAMEDATA.WIN_LINES.forEach((winLines: WinLines) => {
+				this.animateSymbols(winLines.posArray);
+			});
+		}
+	}
+
+	afterWinUpdateSymbols() {
+		//test
+	}
+
+	resetSymbols() {
+		let i: number = 0;
+		for (i = 0; i < 15; i++) {
+			this.reel[i].resetSymbols();
 		}
 	}
 }

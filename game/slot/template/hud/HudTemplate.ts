@@ -44,6 +44,10 @@ export default class HudTemplate extends Sprite {
 		this.resize();
 	}
 
+	updateWinText() {
+		this.totalWinBar.updateText();
+	}
+
 	init() {
 		this.background.anchor.set(0.5);
 		this.background.pivot.set(0.5);

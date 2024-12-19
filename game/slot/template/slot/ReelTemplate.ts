@@ -37,11 +37,22 @@ export default class ReelTemplate extends Sprite {
 		}
 	}
 
+	animateSymbolTexture(symbol_id: number, texture_id: number) {
+		this.symbol[symbol_id].play();
+	}
+
 	applyBlur() {
 		this.filters = [this.blurFilter];
 	}
 
 	removeFilter() {
 		this.filters = [];
+	}
+
+	resetSymbols() {
+		let i: number = 0;
+		for (i = 0; i < 3; i++) {
+			this.symbol[i].reset();
+		}
 	}
 }

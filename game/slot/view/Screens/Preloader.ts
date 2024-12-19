@@ -115,8 +115,8 @@ export default class Preloader extends Sprite {
 				total_win: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_1.png", // prettier-ignore
 				auto: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_2.png", // prettier-ignore
 				stop: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_3.png", // prettier-ignore
-				spin_disabled: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_4.png", // prettier-ignore
-				spin_enabled: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_5.png", // prettier-ignore
+				spin_enabled: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_4.png", // prettier-ignore
+				spin_disabled: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_mg_5.png", // prettier-ignore
 				congratulations: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_rs_1.png", // prettier-ignore
 				you_win: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_rs_2.png", // prettier-ignore
 				free_spins: "/game/media/images/base/dragon-god/word/"+ this.LANG +"/g007_word_rs_3.png", // prettier-ignore
