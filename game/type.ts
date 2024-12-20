@@ -51,6 +51,17 @@ export type AcquireRequestData = {
 	userId: string;
 };
 
+export type StepRequestData = {
+	category: number;
+	coinType: number;
+	machineId: number;
+	userId: number;
+	step: number;
+	score: number;
+	timestamp: number;
+	gameSerial: string;
+};
+
 export type AcquireReceiveData = {
 	resultCode: string;
 	jp: number;

@@ -1,3 +1,4 @@
+import { CURRENCY } from "../enums";
 import { Board, FreeGameInfo, WinLines } from "../type";
 
 export type GameDataType = {
@@ -16,7 +17,6 @@ export type GameDataType = {
 	CREDIT: number;
 	BUY_FREE_GAME: number;
 	BUY_FREE_GAME_ENABLE: boolean;
-
 	//
 	BETS_IDR: number[];
 	BETS_INR: number[];
@@ -27,7 +27,6 @@ export type GameDataType = {
 	BETS_USD: number[];
 	BETS_VND: number[];
 	//
-
 	GOLD: string;
 	PLATINUM: string;
 	SILVER: string;
@@ -37,15 +36,19 @@ export type GameDataType = {
 	TOTAL_WIN: number;
 	WIN_LINES_POS: number[];
 	WIN_LINES: WinLines[];
+	GAME_SERIAL: string;
 
 	FREE_GAME_INFO: FreeGameInfo;
 	BOARD: Board;
 
+	//
+	STEP: number;
+	SCORE: number;
+	TIME_STAMP: string;
+
 	setToken(token: string): void;
 	getToken(): string;
 	initGameData(): void;
-	//setReelStop(number: [][]): void;
-	//getReelStop(): number[][];
 };
 
 export const GAMEDATA: GameDataType = {
@@ -57,7 +60,7 @@ export const GAMEDATA: GameDataType = {
 	USER_ID: "0",
 	GAME_ID: "6",
 	MACHINE_ID: "0",
-	CURRENCY: "IDR",
+	CURRENCY: CURRENCY.IDR,
 	USER_NAME: "user0003",
 	AMOUNT: "100",
 	LANGUAGE: "en-us",
@@ -81,8 +84,11 @@ export const GAMEDATA: GameDataType = {
 	JP: -1,
 	JP_PRIZE: -1,
 	TOTAL_WIN: 0,
-	WIN_LINES: [],
+
 	WIN_LINES_POS: [0],
+	WIN_LINES: [],
+
+	GAME_SERIAL: "",
 
 	FREE_GAME_INFO: {
 		bet: 0,
@@ -103,6 +109,10 @@ export const GAMEDATA: GameDataType = {
 		totems: [],
 		winLines: [],
 	},
+
+	STEP: 0,
+	SCORE: 0,
+	TIME_STAMP: "",
 
 	//-------------------------------
 	getToken(): string {

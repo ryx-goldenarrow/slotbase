@@ -4,6 +4,8 @@ import { gsap, Power0, Elastic, Back } from "gsap";
 import { generateRandom } from "../../utils/Utils";
 import { GAMEDATA } from "../../../api/GAMEDATA";
 import { WinLines } from "../../../type";
+import { Event } from "../../../enums";
+import SymbolTemplate from "./SymbolTemplate";
 
 export default class SlotTemplate extends Sprite {
 	//initial stop when loading the game
@@ -27,6 +29,8 @@ export default class SlotTemplate extends Sprite {
 	public REEL_STOP: boolean[] = [false, false, false, false, false];
 	public SLOT_SPINNING: boolean = false;
 	public REEL_STOP_ID: number[] = [];
+	public timeline: GSAPTimeline;
+	public allFinalReelSymbol: SymbolTemplate[] = [];
 
 	constructor() {
 		super();
@@ -41,7 +45,10 @@ export default class SlotTemplate extends Sprite {
 		this.addChild(this.background, this.reelmask, this.slotReelGroup);
 
 		this.init();
+		//this.getAllFinalReelSymbol();
 		this.addTicker();
+
+		this.timeline = gsap.timeline();
 	}
 
 	init() {
@@ -53,7 +60,6 @@ export default class SlotTemplate extends Sprite {
 		this.slotReelGroup.mask = this.reelmask;
 
 		let i: number = 0;
-		let k: number = 0;
 		for (i = 0; i < 5; i++) {
 			this.reelContainer[i] = this.slotReelGroup.addChild(new Container());
 
@@ -80,7 +86,7 @@ export default class SlotTemplate extends Sprite {
 
 	addTicker() {
 		let i: number = 0;
-		Ticker.shared.add((dt) => {
+		Ticker.shared.add((deltaTime) => {
 			if (this.SLOT_SPINNING) {
 				for (i = 0; i < 5; i++) {
 					if (this.REEL_STOP[i] == false) {
@@ -95,6 +101,8 @@ export default class SlotTemplate extends Sprite {
 	}
 
 	startSpin() {
+		this.timeline.clear(true);
+
 		//toggle spin
 		this.updateSymbolAssets(
 			this.placeholderstop[generateRandom(this.placeholderstop.length, 0)]
@@ -115,7 +123,7 @@ export default class SlotTemplate extends Sprite {
 		let i:number = 0;
 		let k:number = 0;
 		let id:number = 0;
-		let reelStopId:number[][] = []
+		let reelStopId:number[][] = [];
 
 		for(k=0; k<5;k++){
 			let reels:number[] = []
@@ -149,8 +157,22 @@ export default class SlotTemplate extends Sprite {
 		}
 	}
 
+	/*getAllFinalReelSymbol() {
+		let i: number = 0;
+		let k: number = 0;
+
+		for (i = 0; i < 5; i++) {
+			for (k = 0; i < 3; k++) {
+				//this.allFinalReelSymbol.push(this.reel[i].symbol[k]);
+			}
+		}
+
+		console.log("symbols", this.allFinalReelSymbol);
+	}*/
+
 	animateSymbols(winningSymbols: number[]) {
 		let i: number = 0;
+		//console.log("animateSymbols", winningSymbols);
 		for (i = 0; i < winningSymbols.length; i++) {
 			let _id: number = winningSymbols[i];
 			if (_id < 3) {
@@ -163,6 +185,24 @@ export default class SlotTemplate extends Sprite {
 				this.reel[3].animateSymbolTexture(_id % 3, _id);
 			} else if (_id < 15) {
 				this.reel[4].animateSymbolTexture(_id % 3, _id);
+			}
+		}
+	}
+
+	changeWinSymbols(winningSymbols: number[], changeSymbols: number[]) {
+		let i: number = 0;
+		for (i = 0; i < winningSymbols.length; i++) {
+			let _id: number = winningSymbols[i];
+			if (_id < 3) {
+				this.reel[0].changeSymbolTexture(_id % 3, changeSymbols[i]);
+			} else if (_id < 6) {
+				this.reel[1].changeSymbolTexture(_id % 3, changeSymbols[i]);
+			} else if (_id < 9) {
+				this.reel[2].changeSymbolTexture(_id % 3, changeSymbols[i]);
+			} else if (_id < 12) {
+				this.reel[3].changeSymbolTexture(_id % 3, changeSymbols[i]);
+			} else if (_id < 15) {
+				this.reel[4].changeSymbolTexture(_id % 3, changeSymbols[i]);
 			}
 		}
 	}
@@ -189,8 +229,9 @@ export default class SlotTemplate extends Sprite {
 				onComplete: () => {
 					this.reel[reelID].removeFilter();
 					if (reelID == 4) {
+						//last reel
 						this.SLOT_SPINNING = false;
-						this.emit("spinEndEvent");
+						this.emit(Event.SPIN_END_EVENT);
 						this.checkWin();
 					}
 				},
@@ -200,8 +241,30 @@ export default class SlotTemplate extends Sprite {
 
 	checkWin() {
 		if (GAMEDATA.WIN_LINES_POS.length > 0) {
-			GAMEDATA.WIN_LINES.forEach((winLines: WinLines) => {
-				this.animateSymbols(winLines.posArray);
+			GAMEDATA.WIN_LINES.forEach((winLines: WinLines, id: number) => {
+				let winAnimationSet: number[] = winLines.posArray;
+				let changeAnimationSet: number[] = winLines.afterTotemIDArray;
+				console.log("WIN_LINES", winAnimationSet, changeAnimationSet);
+
+				this.timeline.add("animation" + id);
+				this.timeline.add(
+					gsap.to(winLines, 1, {
+						onStart: () => {
+							this.animateSymbols(winAnimationSet);
+						},
+						onComplete: () => {
+							console.log("change symbols");
+							this.changeWinSymbols(winAnimationSet, changeAnimationSet);
+						},
+					})
+				);
+				this.timeline.add(
+					gsap.to(winLines, 1, {
+						onStart: () => {
+							//gap
+						},
+					})
+				);
 			});
 		}
 	}

@@ -1,19 +1,24 @@
 import { GAMEDATA } from "./GAMEDATA";
+import { EventEmitter } from "pixi.js";
 import {
+	User,
 	LaunchReceiveData,
 	LaunchRequestData,
 	LoginByTokenReceiveData,
 	LoginReceiveData,
-	User,
 	AcquireRequestData,
 	AcquireReceiveData,
 	SettleReceiveData,
 	InfoReceiveData,
 	SettleRequestData,
 	InfoRequestData,
+	StepRequestData,
 } from "../type";
+import { Event } from "../enums";
 
 export default class API {
+	public event: EventEmitter = new EventEmitter();
+
 	constructor() {}
 
 	private LOGIN_URL: string = 'https://aberuncators.com:9443/v1/ais/login'; //prettier-ignore
@@ -22,6 +27,7 @@ export default class API {
 	private INFO_URL:string = 'https://aberuncators.com:20443/v1/ragnarok/info' //prettier-ignore
 	private SPIN_REQUEST_URL:string = 'https://aberuncators.com:20443/v1/ragnarok/acquire' //prettier-ignore
 	private SETTLE_REQUEST_URL: string = "https://aberuncators.com:20443/v1/ragnarok/settle"; //prettier-ignore
+	private STEP_REQUEST_URL: string = "https://aberuncators.com:20443/v1/ragnarok/step"; //prettier-ignore
 
 	//-----------------------------------------------------------------------------------
 	// data request //-------------------------------------------------------------------
@@ -55,6 +61,7 @@ export default class API {
 		);
 	}
 
+	//LAUNCH REQUEST
 	launchGame() {
 		this.send(
 			this.LAUNCH_GAME_URL,
@@ -69,6 +76,7 @@ export default class API {
 		);
 	}
 
+	//LOGIN BY TOKEN REQUEST
 	loginByToken() {
 		this.send(
 			this.TOKEN_LOGIN_URL,
@@ -83,6 +91,7 @@ export default class API {
 		);
 	}
 
+	//INFO REQUEST
 	infoRequest() {
 		this.send(
 			this.INFO_URL,
@@ -91,12 +100,14 @@ export default class API {
 			(response: any) => {
 				response.json().then((resData: InfoReceiveData) => {
 					this.copyInfoData(resData);
+					this.event.emit(Event.INFO_RECEIVE_EVENT);
 				});
 			}
 		);
 	}
 
-	spinRequest(action: Function) {
+	//SPIN REQUEST
+	acquireRequest(action: Function) {
 		this.send(
 			this.SPIN_REQUEST_URL,
 			"POST",
@@ -104,13 +115,14 @@ export default class API {
 			(response: any) => {
 				response.json().then((resData: AcquireReceiveData) => {
 					this.copyAcquireData(resData);
+					this.event.emit(Event.ACQUIRE_RECEIVE_EVENT);
 					action(resData);
-					this.settleRequest();
 				});
 			}
 		);
 	}
 
+	//SETTLE REQUEST
 	settleRequest() {
 		this.send(
 			this.SETTLE_REQUEST_URL,
@@ -118,7 +130,6 @@ export default class API {
 			this.getSettleRequestData(),
 			(response: any) => {
 				response.json().then((resData: SettleReceiveData) => {
-					//action(resData);
 					this.infoRequest();
 				});
 			}
@@ -126,11 +137,10 @@ export default class API {
 	}
 
 	// data management //-----------------------------------------------------------------------------------
-
 	getAcquireData(): AcquireRequestData {
 		return {
-			bet: 500,
-			category: "7",
+			bet: (GAMEDATA.BET = GAMEDATA.BETS_IDR[0]),
+			category: GAMEDATA.CATEGORY,
 			coinType: GAMEDATA.COINT_TYPE,
 			machineId: GAMEDATA.MACHINE_ID,
 			userId: GAMEDATA.USER_ID,
@@ -151,7 +161,7 @@ export default class API {
 	getInfoRequestData(): InfoRequestData {
 		return {
 			bet: GAMEDATA.BET,
-			category: "6",
+			category: GAMEDATA.CATEGORY,
 			coinType: GAMEDATA.COINT_TYPE,
 			userId: GAMEDATA.USER_ID,
 		};
@@ -167,6 +177,20 @@ export default class API {
 		};
 	}
 
+	getStepRequestData(): StepRequestData {
+		return {
+			category: parseInt(GAMEDATA.CATEGORY),
+			coinType: GAMEDATA.COINT_TYPE,
+			machineId: parseInt(GAMEDATA.MACHINE_ID),
+			userId: parseInt(GAMEDATA.USER_ID),
+			step: GAMEDATA.STEP,
+			score: GAMEDATA.SCORE,
+			timestamp: parseInt(GAMEDATA.TIME_STAMP),
+			gameSerial: GAMEDATA.GAME_SERIAL,
+		};
+	}
+
+	//save data to GAMEDATA----------------------------------------------
 	copyLaunchData(launchData: LaunchReceiveData) {
 		GAMEDATA.TOKEN = launchData.data.userToken;
 		GAMEDATA.USER_ID = launchData.data.userid;
@@ -206,6 +230,7 @@ export default class API {
 		GAMEDATA.BOARD = acquireData.board;
 		GAMEDATA.REEL_STOP = GAMEDATA.BOARD.totems;
 		GAMEDATA.WIN_LINES = GAMEDATA.BOARD.winLines;
+		GAMEDATA.GAME_SERIAL = GAMEDATA.BOARD.gameSerial;
 	}
 
 	//TODO

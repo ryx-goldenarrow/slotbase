@@ -1,6 +1,7 @@
 import "pixi.js/text-bitmap";
 import { Sprite, Assets, HTMLText } from "pixi.js";
 import { isLandscape, nFormatter } from "../../utils/Utils";
+import { GAMEDATA } from "../../../api/GAMEDATA";
 
 export default class BetButtonTemplate extends Sprite {
 	private background: Sprite;
@@ -21,12 +22,12 @@ export default class BetButtonTemplate extends Sprite {
 		this.btnBetAdd = this.addChild(new Sprite(Assets.get("btn_bet_add")));
 		this.btnBetAdd.anchor.set(0.5);
 		this.btnBetAdd.pivot.set(0.5);
-		this.btnBetAdd.position.set(165, 0);
+		this.btnBetAdd.position.set(175, 0);
 
 		this.btnBetMin = this.addChild(new Sprite(Assets.get("btn_bet_min")));
 		this.btnBetMin.anchor.set(0.5);
 		this.btnBetMin.pivot.set(0.5);
-		this.btnBetMin.position.set(-165, 0);
+		this.btnBetMin.position.set(-175, 0);
 
 		this.textBetLabel = this.addChild(
 			new HTMLText({
@@ -55,6 +56,6 @@ export default class BetButtonTemplate extends Sprite {
 	}
 
 	updateText(bet: number) {
-		this.textBetLabel.text = "IDR " + nFormatter(bet);
+		this.textBetLabel.text = GAMEDATA.CURRENCY + " " + nFormatter(bet);
 	}
 }

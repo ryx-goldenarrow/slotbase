@@ -1,7 +1,7 @@
 import "pixi.js/text-bitmap";
 import { Sprite, Assets, Text, NineSliceSprite } from "pixi.js";
 import { GAMEDATA } from "../../../api/GAMEDATA";
-import { nFormatter } from "../../utils/Utils";
+import { nFormatter, numberComma } from "../../utils/Utils";
 
 export default class TotalWinTemplate extends Sprite {
 	private background: NineSliceSprite;
@@ -48,6 +48,6 @@ export default class TotalWinTemplate extends Sprite {
 	}
 
 	updateText() {
-		this.textTotalWinAmount.text = nFormatter(GAMEDATA.TOTAL_WIN);
+		this.textTotalWinAmount.text = numberComma(GAMEDATA.TOTAL_WIN);
 	}
 }

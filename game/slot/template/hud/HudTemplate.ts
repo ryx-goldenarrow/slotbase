@@ -57,7 +57,7 @@ export default class HudTemplate extends Sprite {
 		if (isLandscape()) {
 			this.totalWinBar.position.set(20, 20);
 			this.background.position.set(0, 0);
-			this.btnBet.position.set(-420, 50);
+			this.btnBet.position.set(-410, 50);
 			this.btnInfo.position.set(-680, 50);
 			this.btnAuto.position.set(380, 45);
 			this.btnSpin.position.set(600, 40);

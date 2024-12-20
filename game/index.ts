@@ -14,8 +14,6 @@ import { User } from "./type";
 const cssstyle = require("../game/slot/template/css/game.css");
 
 (async () => {
-	//TexturePool.textureOptions.scaleMode = "linear";
-
 	//initialize API
 	let api: API = new API();
 	let user: User = {
@@ -32,6 +30,7 @@ const cssstyle = require("../game/slot/template/css/game.css");
 		resizeTo: window,
 		resolution: window.devicePixelRatio,
 	});
+
 	app.canvas.style.position = "relative";
 	document.body.appendChild(app.canvas);
 
@@ -41,7 +40,7 @@ const cssstyle = require("../game/slot/template/css/game.css");
 	app.stage.addChild(gameContainer);
 
 	//temp size
-	console.log("sizes", app.renderer.width, app.renderer.width);
+	//console.log("sizes", app.renderer.width, app.renderer.width);
 	gameContainer.scale.set(0.5);
 	gameContainer.position.set(
 		app.renderer.width * 0.5,
@@ -52,7 +51,11 @@ const cssstyle = require("../game/slot/template/css/game.css");
 	let preloader: Preloader = new Preloader();
 	gameContainer.addChild(preloader);
 
-	//now we load the assets
+	preloader.on("preloadComplete", () => {
+		console.log("assets compete");
+	});
+
+	//load the assets
 	await Assets.loadBundle("images", (e: number) => {
 		preloader.showProgress(e);
 	});

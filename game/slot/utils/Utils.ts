@@ -1,11 +1,3 @@
-import * as PIXI from "pixi.js";
-import { gsap } from "gsap";
-
-export function generateRandom(_range: number, startAt: number = 0): number {
-	let rdm: number = Math.floor(Math.random() * (startAt + _range));
-	return rdm;
-}
-
 export function setFullscreen(_id: boolean): void {
 	const docElmWithBrowsersFullScreenFunctions =
 		document.documentElement as HTMLElement & {
@@ -27,19 +19,21 @@ export function setFullscreen(_id: boolean): void {
 	}
 }
 
-//
+export function generateRandom(_range: number, startAt: number = 0): number {
+	let random: number = Math.floor(Math.random() * (startAt + _range));
+	return random;
+}
+
+//shuffle number array
 export function shuffleArray(arr: number[]): number[] {
 	let i: number = 0;
 	let temp: number = 0;
-	let j: number = 0;
-
-	for (let i = arr.length - 1; i > 0; i--) {
+	for (i = arr.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		temp = arr[i];
 		arr[i] = arr[j];
 		arr[j] = temp;
 	}
-
 	return arr;
 }
 
@@ -63,27 +57,21 @@ export function isPortrait() {
 	return window.matchMedia("(orientation: portrait)").matches;
 }
 
-//change graphics color
-export function changeGraphicsColor(
-	gfx: PIXI.Graphics,
-	color: string,
-	duration: number = 1
-) {
-	gsap.to(gfx, { duration: duration, pixi: { lineColor: color } });
-}
-
 export function nFormatter(num: number) {
 	if (num >= 1000000000) {
-		return (num / 1000000000).toFixed(1).replace(/\.0$/, "") + "G";
+		return (num / 1000000000).toFixed(2).replace(/\.0$/, "") + "G";
 	} else if (num >= 1000000) {
-		return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+		return (num / 1000000).toFixed(2).replace(/\.0$/, "") + "M";
 	} else if (num >= 1000) {
-		return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+		return (num / 1000).toFixed(2).replace(/\.0$/, "") + "K";
 	} else if (num <= 100 && num != 0) {
 		return (Math.round(num * 100) / 100).toFixed(2);
 	}
-
 	return num;
+}
+
+export function numberComma(x: number) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 export function addKeyboardEvent(keycode: number, fnc: Function) {

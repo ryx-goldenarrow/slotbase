@@ -26,6 +26,8 @@ export default class MainGame extends Sprite {
 	public userBox: UserBox;
 	public jackpotbar: JackpotTopBar;
 
+	public btnBuyFreeSpin: Sprite;
+
 	constructor(app: Application) {
 		super();
 		this.anchor.set(0.5);
@@ -35,12 +37,14 @@ export default class MainGame extends Sprite {
 		this.background = new Background(app);
 		this.slot = new SlotTemplate();
 		this.hud = new HudTemplate();
-
 		this.userBox = new UserBox();
 		this.jackpotbar = new JackpotTopBar();
-
 		this.info = new InfoPage();
 		this.info.visible = false;
+
+		this.btnBuyFreeSpin = Sprite.from(Assets.get("btn_buy_free_spin"));
+		this.btnBuyFreeSpin.anchor.set(0.5);
+		this.btnBuyFreeSpin.scale.set(1.15);
 
 		this.init();
 	}
@@ -63,37 +67,31 @@ export default class MainGame extends Sprite {
 			this.hud,
 			this.userBox,
 			this.jackpotbar,
-			this.info
+			this.info,
+			this.btnBuyFreeSpin
 		);
 	}
 
-	//conntrol settings---------------------------------
-
-	spin() {
-		this.slot.startSpin();
+	resetValues() {
+		this.slot.resetSymbols();
+		this.hud.updateWinText();
 	}
-
-	resetValues() {}
 
 	//display settings---------------------------------
-
 	checkScreenSize() {
 		document.body.onresize = (e) => {
-			//setTimeout(() => {
-			console.log("test resize", e);
 			this.resizeScreen();
-			//}, 500);
-			//});
 		};
 
-		gsap.delayedCall(0.1, () => {
+		//on load, need some delay to trigger resize event
+		setTimeout(() => {
 			this.resizeScreen();
-		});
+		}, 1);
 	}
+
 	resizeScreen() {
 		//this.x = this.app.renderer.width / 2;
 		//this.y = this.app.renderer.height / 2;
-
 		if (isPortrait()) {
 			//portrait
 			this.width = (this.app.canvas.width / 720) * 0.84;
@@ -113,6 +111,7 @@ export default class MainGame extends Sprite {
 			this.hud.y = 340;
 			this.userBox.position.set(-660, -340);
 			this.jackpotbar.position.set(0, -340);
+			this.btnBuyFreeSpin.position.set(-650, 150);
 		}
 	}
 }

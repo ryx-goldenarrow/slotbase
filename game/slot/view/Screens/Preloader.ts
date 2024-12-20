@@ -135,17 +135,17 @@ export default class Preloader extends Sprite {
 		this.preloader_container.addChild(this.bg);
 		this.bg.rect(-640, -360, 1280, 720);
 		this.bg.fill("#ffffff");
-
+		//container
 		this.preloader_container.addChild(this.bg_progress_bar);
 		this.bg_progress_bar.rect(0, 0, 1000, 20);
 		this.bg_progress_bar.fill("#999999");
 		this.bg_progress_bar.position.set(-500, 280);
-
+		//bar
 		this.bg_progress_bar.addChild(this.progress_bar);
 		this.progress_bar.rect(0, 0, 1000, 20);
 		this.progress_bar.fill("#CB5027");
 		this.progress_bar.scale.x = 0;
-
+		//text
 		this.progress_text.x = 500;
 		this.progress_text.y = 25;
 		this.bg_progress_bar.addChild(this.progress_text);

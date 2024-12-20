@@ -1,6 +1,6 @@
 import "pixi.js/text-bitmap";
 import { Sprite, Assets, Text, HTMLText } from "pixi.js";
-import { isLandscape, nFormatter } from "../../utils/Utils";
+import { isLandscape, nFormatter, numberComma } from "../../utils/Utils";
 import { GAMEDATA } from "../../../api/GAMEDATA";
 
 export default class UserBox extends Sprite {
@@ -19,7 +19,7 @@ export default class UserBox extends Sprite {
 
 		this.textCreditLabel = this.addChild(
 			new HTMLText({
-				text: "IDR 100,000.00",
+				text: "",
 				style: {
 					fontFamily: "Arial",
 					fontSize: 20,
@@ -42,8 +42,20 @@ export default class UserBox extends Sprite {
 		}
 	}
 
-	updateText() {
-		this.textCreditLabel.text =
-			GAMEDATA.CURRENCY + " " + nFormatter(GAMEDATA.CREDIT);
+	updateBalanceText(deductBet: boolean = false) {
+		let balance: number = GAMEDATA.CREDIT;
+		let credit: number = GAMEDATA.CREDIT;
+		let bet: number = (GAMEDATA.BET = GAMEDATA.BETS_IDR[0]);
+		let balanceText: string = "";
+		if (deductBet) {
+			if (credit >= bet) {
+				console.log("deduct balance", bet);
+				balance = credit - bet;
+			} else {
+				console.log("insufficient balance");
+			}
+		}
+		balanceText = numberComma(balance);
+		this.textCreditLabel.text = GAMEDATA.CURRENCY + " " + balanceText;
 	}
 }

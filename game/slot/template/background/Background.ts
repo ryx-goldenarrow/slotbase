@@ -33,7 +33,7 @@ export default class Background extends Sprite {
 			this.dragon.position.set(-540, 180);
 			this.dragon.scale.set(0.75);
 		} else {
-			this.dragon.position.set(-680, 180);
+			this.dragon.position.set(-680, 90);
 			this.dragon.scale.set(0.75);
 		}
 	}

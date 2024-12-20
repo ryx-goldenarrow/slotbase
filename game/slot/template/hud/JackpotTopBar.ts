@@ -1,7 +1,7 @@
-import "pixi.js/text-bitmap";
-import { Sprite, Assets, Text, HTMLText } from "pixi.js";
-import { isLandscape, nFormatter } from "../../utils/Utils";
+import { Sprite, Assets, HTMLText } from "pixi.js";
+import { isLandscape, numberComma } from "../../utils/Utils";
 import { GAMEDATA } from "../../../api/GAMEDATA";
+import { CURRENCY } from "../../../enums";
 
 export default class JackpotTopBar extends Sprite {
 	private background: Sprite[] = [];
@@ -16,7 +16,6 @@ export default class JackpotTopBar extends Sprite {
 
 		let textures: string[] = ["platinum", "gold", "silver"];
 		let i: number = 0;
-
 		for (i = 0; i < 3; i++) {
 			this.background[i] = this.addChild(new Sprite(Assets.get("bg_bar_top")));
 			this.background[i].anchor.set(0.5);
@@ -31,7 +30,7 @@ export default class JackpotTopBar extends Sprite {
 
 			this.textLabel[i] = this.background[i].addChild(
 				new HTMLText({
-					text: "IDR 100.00" + i,
+					text: GAMEDATA.CURRENCY + " 0",
 					style: {
 						fontFamily: "Arial",
 						fontSize: 25,
@@ -56,10 +55,11 @@ export default class JackpotTopBar extends Sprite {
 	}
 
 	updateText() {
-		console.log("update text");
-		this.textLabel[0].text = GAMEDATA.CURRENCY + " " + GAMEDATA.PLATINUM;
-		this.textLabel[1].text = GAMEDATA.CURRENCY + " " + GAMEDATA.GOLD;
-		this.textLabel[2].text = GAMEDATA.CURRENCY + " " + GAMEDATA.SILVER;
-		//this.textLabel.text = GAMEDATA.CURRENCY + " " + nFormatter(GAMEDATA.CREDIT);
+		let i: number = 0;
+		let data: string[] = [GAMEDATA.PLATINUM, GAMEDATA.GOLD, GAMEDATA.SILVER];
+		for (i = 0; i < data.length; i++) {
+			this.textLabel[i].text =
+				GAMEDATA.CURRENCY + " " + numberComma(parseInt(data[i]));
+		}
 	}
 }

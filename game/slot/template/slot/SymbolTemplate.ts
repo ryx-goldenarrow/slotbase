@@ -1,5 +1,6 @@
 import { Sprite, Assets } from "pixi.js";
 import SpineObject from "../../view/components/SpineObject";
+import { gsap, Sine, Elastic, Power0, Back } from "gsap";
 
 export default class SymbolTemplate extends Sprite {
 	public base: Sprite;
@@ -36,7 +37,9 @@ export default class SymbolTemplate extends Sprite {
 		super();
 		this.anchor.set(0.5);
 		this.pivot.set(0.5);
-		this.base = this.addChild(new Sprite(Assets.get(this.symbolNames[id])));
+		this.cullable = true;
+
+		this.base = this.addChild(Sprite.from(Assets.get(this.symbolNames[id])));
 		this.spine = this.addChild(new SpineObject("symbol"));
 		this.sparkle = this.addChild(new SpineObject("change"));
 		this.init();
@@ -54,7 +57,7 @@ export default class SymbolTemplate extends Sprite {
 		this.spine.animate(
 			0,
 			this.symbolTexture[this.symboldID] + "_play_win",
-			true
+			false
 		);
 	}
 
@@ -63,8 +66,22 @@ export default class SymbolTemplate extends Sprite {
 		this.base.texture = Assets.get(this.symbolNames[id]);
 	}
 
+	changeWinSymbol(id: number) {
+		this.sparkle.animate(0, "animation", false);
+		this.symboldID = id;
+
+		gsap.to(this, 0.1, {
+			startAt: { alpha: 0 },
+			alpha: 1,
+			delay: 0.8,
+			onCompete: () => {
+				this.base.texture = Assets.get(this.symbolNames[id]);
+			},
+		});
+	}
+
 	animateChange() {
-		this.sparkle.animate(0, "animation", true);
+		this.sparkle.animate(0, "animation", false);
 	}
 
 	reset() {

@@ -41,6 +41,11 @@ export default class ReelTemplate extends Sprite {
 		this.symbol[symbol_id].play();
 	}
 
+	changeSymbolTexture(symbol_id: number, texture_id: number) {
+		this.symbol[symbol_id].reset();
+		this.symbol[symbol_id].changeWinSymbol(texture_id);
+	}
+
 	applyBlur() {
 		this.filters = [this.blurFilter];
 	}
